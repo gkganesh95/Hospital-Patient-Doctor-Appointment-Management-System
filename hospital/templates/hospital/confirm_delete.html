@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Appointment Confirmation</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 400px; margin: auto; padding: 20px; border: 1px solid #ccc; }
+        button { padding: 10px 20px; margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Confirm Delete</h2>
+        <p>Are you sure you want to delete the appointment for <strong>{{ object.patient.name }}</strong> with <strong>{{ object.doctor.name }}</strong> on <strong>{{ object.appointment_datetime }}</strong>?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Yes, Delete</button>
+            <a href="{% url 'appointment_list' %}"><button type="button">Cancel</button></a>
+        </form>
+    </div>
+</body>
+</html>

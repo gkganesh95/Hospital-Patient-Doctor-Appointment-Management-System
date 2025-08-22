@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book or Edit Appointment</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .form-container { max-width: 420px; margin: auto; padding: 20px; border: 1px solid #ccc; }
+        .errorlist { color: red; list-style: none; padding-left: 0; }
+        label { display: block; margin-top: 10px; }
+        select, input { width: 100%; padding: 8px; margin-top: 4px; box-sizing: border-box; }
+        button { margin-top: 16px; padding: 10px 20px; }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h2>{% if edit %}Reschedule Appointment{% else %}Book New Appointment{% endif %}</h2>
+    {% if messages %}
+        {% for message in messages %}
+            <p style="color: green;">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <label for="id_patient">Select Patient:</label>
+        {{ form.patient.errors }}
+        {{ form.patient }}
+
+        <label for="id_doctor">Select Doctor:</label>
+        {{ form.doctor.errors }}
+        {{ form.doctor }}
+
+        <label for="id_appointment_date">Date:</label>
+        {{ form.appointment_date.errors }}
+        {{ form.appointment_date }}
+
+        <label for="id_appointment_time">Time:</label>
+        {{ form.appointment_time.errors }}
+        {{ form.appointment_time }}
+
+        <button type="submit">{% if edit %}Update Appointment{% else %}Book Appointment{% endif %}</button>
+    </form>
+</div>
+</body>
+</html>

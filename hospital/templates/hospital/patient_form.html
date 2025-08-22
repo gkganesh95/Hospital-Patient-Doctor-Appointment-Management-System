@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register Patient</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .form-container { max-width: 400px; margin: auto; padding: 20px; border: 1px solid #ccc; }
+        .errorlist { color: red; list-style: none; padding-left: 0; }
+        label { display: block; margin-top: 10px; }
+        input, select { width: 100%; padding: 8px; box-sizing: border-box; margin-top: 4px; }
+        button { margin-top: 16px; padding: 10px 20px; }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Register New Patient</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <p style="color: green;">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            
+            <label for="id_name">Name:</label>
+            {{ form.name.errors }}
+            {{ form.name }}
+
+            <label for="id_age">Age:</label>
+            {{ form.age.errors }}
+            {{ form.age }}
+
+            <label for="id_gender">Gender:</label>
+            {{ form.gender.errors }}
+            {{ form.gender }}
+
+            <label for="id_contact_number">Contact Number:</label>
+            {{ form.contact_number.errors }}
+            {{ form.contact_number }}
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</body>
+</html>

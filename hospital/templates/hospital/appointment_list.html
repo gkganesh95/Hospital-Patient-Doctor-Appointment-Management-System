@@ -1,0 +1,63 @@
+<form method="get">
+    Department:
+    <select name="department">
+        <option value="">All</option>
+        {% for dept, label in DEPARTMENTS %}
+            <option value="{{ dept }}">{{ label }}</option>
+        {% endfor %}
+    </select>
+    Doctor:
+    <select name="doctor">
+        <option value="">All</option>
+        {% for doc in doctors %}
+            <option value="{{ doc.id }}">{{ doc.name }}</option>
+        {% endfor %}
+    </select>
+    Status:
+    <select name="status">
+        <option value="">All</option>
+        <option value="Scheduled">Scheduled</option>
+        <option value="Completed">Completed</option>
+        <option value="Cancelled">Cancelled</option>
+    </select>
+    From: <input type="date" name="start_date">
+    To: <input type="date" name="end_date">
+    <button type="submit">Filter</button>
+</form>
+
+<table>
+<thead>
+<tr>
+  <th>ID</th><th>Patient</th><th>Doctor</th><th>Department</th>
+  <th>Date</th><th>Time</th><th>Status</th><th>Actions</th>
+</tr>
+</thead>
+<tbody>
+{% for appt in appointments %}
+<tr>
+  <td>{{ appt.id }}</td>
+  <td>{{ appt.patient.name }}</td>
+  <td>{{ appt.doctor.name }}</td>
+  <td>{{ appt.doctor.department }}</td>
+  <td>{{ appt.appointment_datetime.date }}</td>
+  <td>{{ appt.appointment_datetime.time }}</td>
+  <td>{{ appt.status }}</td>
+  <td>
+    <a href="{% url 'edit_appointment' appt.id %}">Edit</a>
+    <form method="post" action="{% url 'delete_appointment' appt.id %}" style="display:inline;">{% csrf_token %}
+      <button type="submit">Delete</button>
+    </form>
+    <form method="post" action="{% url 'update_status' appt.id %}" style="display:inline;">
+      {% csrf_token %}
+      <select name="status">
+        <option value="Scheduled">Scheduled</option>
+        <option value="Completed">Completed</option>
+        <option value="Cancelled">Cancelled</option>
+      </select>
+      <button type="submit">Update</button>
+    </form>
+  </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
