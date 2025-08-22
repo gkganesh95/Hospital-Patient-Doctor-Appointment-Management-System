@@ -90,7 +90,6 @@ def delete_appointment(request, pk):
 def update_status(request, pk):
     appointment = get_object_or_404(Appointment, pk=pk)
     if request.method == 'POST':
-        
         status = request.POST.get('status')
         if status in dict(Appointment.STATUS_CHOICES):
             appointment.status = status
