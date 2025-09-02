@@ -3,6 +3,8 @@ from .models import Doctor, Patient, Appointment
 from .forms import PatientForm, AppointmentForm
 from django.contrib import messages
 from datetime import datetime
+from django.utils.timezone import now
+from django.db.models import Count, Q
 
 # Patient Registration
 def register_patient(request):
@@ -97,4 +99,26 @@ def update_status(request, pk):
             messages.success(request, f'Status updated to {status}')
         return redirect('appointment_list')
     return render(request, 'hospital/update_status.html', {'object': appointment})
+
+# Dashboard View
+def dashboard(request):
+    today = now().date()  # current date
+
+    total_patients = Patient.objects.count()
+    total_appointments_today = Appointment.objects.filter(appointment_datetime__date=today).count()
+
+    # Count completed and cancelled appointments overall or optionally for today
+    appointment_status_counts = Appointment.objects.aggregate(
+        completed=Count('id', filter=Q(status='Completed')),
+        cancelled=Count('id', filter=Q(status='Cancelled'))
+    )
+
+    context = {
+        'total_patients': total_patients,
+        'total_appointments_today': total_appointments_today,
+        'completed_appointments': appointment_status_counts['completed'],
+        'cancelled_appointments': appointment_status_counts['cancelled'],
+    }
+    return render(request, 'hospital/dashboard.html', context)
+
 

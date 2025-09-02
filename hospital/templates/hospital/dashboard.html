@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hospital Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; max-width: 600px; }
+        h2 { margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { text-align: left; padding: 10px; border: 1px solid #ccc; }
+        th { background-color: #f2f2f2; }
+        .summary { font-size: 1.2em; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <h2>Hospital Dashboard</h2>
+
+    <div class="summary">
+        <p><strong>Total Patients Registered:</strong> {{ total_patients }}</p>
+        <p><strong>Total Appointments Scheduled Today:</strong> {{ total_appointments_today }}</p>
+    </div>
+
+    <h3>Appointment Status Summary</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Status</th>
+                <th>Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Completed</td>
+                <td>{{ completed_appointments }}</td>
+            </tr>
+            <tr>
+                <td>Cancelled</td>
+                <td>{{ cancelled_appointments }}</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
